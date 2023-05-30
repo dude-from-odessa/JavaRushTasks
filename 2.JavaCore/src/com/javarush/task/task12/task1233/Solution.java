@@ -4,11 +4,6 @@ package com.javarush.task.task12.task1233;
 Изоморфы наступают
 */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Solution {
     public static void main(String[] args) throws Exception {
         int[] data = new int[]{1, 2, 3, 5, -2, -8, 0, 77, 5, 5};
@@ -24,12 +19,15 @@ public class Solution {
             return new Pair<Integer, Integer>(null, null);
         }
 
-        //напишите тут ваш код
+        int index = 0;
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < array[index]) {
+                index = i;
+            }
 
-        List<Integer> arrayList = Arrays.stream(array).boxed().collect(Collectors.toList());
-        Integer x = arrayList.stream().min((o1, o2) -> o1 - o2).get();
+        }
 
-        return new Pair<Integer, Integer>(x, arrayList.indexOf(x));
+        return new Pair<Integer, Integer>(array[index], index);
     }
 
     public static class Pair<X, Y> {
