@@ -13,7 +13,7 @@ public class Solution {
     public static void main(String[] args) {
         // напишите тут ваш код
         try (Scanner scanner = new Scanner(System.in);
-             BufferedWriter bufferedWriter = Files.newBufferedWriter(Path.of(scanner.nextLine()))) {
+             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(scanner.nextLine())))) {
             while (true){
                 String str = scanner.nextLine();
                 if(str.equals("exit")){
@@ -23,8 +23,8 @@ public class Solution {
                 bufferedWriter.write(str);
                 bufferedWriter.newLine();
             }
-        } catch (IOException e) {
-            System.out.println("Something went wrong : " + e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
