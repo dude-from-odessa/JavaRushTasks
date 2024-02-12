@@ -1,6 +1,5 @@
 package com.javarush.task.task18.task1817;
 
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -9,23 +8,19 @@ import java.io.IOException;
 */
 
 public class Solution {
-    public static void main(String[] args) {
-        try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
-
-            int spaces = 0;
-            int characters = 0;
-            while (fileInputStream.available() > 0) {
-                int character = fileInputStream.read();
-                if (character == 32) {
-                    spaces++;
-                }
-                characters++;
+    public static void main(String[] args) throws IOException {
+        int total = 0;
+        int spaces = 0;
+        try (FileReader fileReader = new FileReader(args[0])) {
+            while (fileReader.ready()) {
+                int readedChar = fileReader.read();
+                total++;
+                if (readedChar == (int) ' ') spaces++;
             }
-            double print = ((double) spaces / characters) * 100;
-
-            System.out.println(Math.round(print * 100) / 100.0);
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        if (total != 0) {
+            double result = (double) spaces / total * 100;
+            System.out.printf("%.2f", result);
         }
     }
 }

@@ -1,33 +1,27 @@
 package com.javarush.task.task18.task1818;
 
 import java.io.*;
-import java.util.stream.Stream;
 
 /* 
 Два в одном
 */
 
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName1 = reader.readLine();
+        String fileName2 = reader.readLine();
+        String fileName3 = reader.readLine();
 
-        try (BufferedReader path = new BufferedReader(new InputStreamReader(System.in));
-             FileOutputStream file1 = new FileOutputStream(path.readLine(), true);
-             FileInputStream file2 = new FileInputStream(path.readLine());
-             FileInputStream file3 = new FileInputStream(path.readLine())) {
-
-            while (file2.available() > 0) {
-                file1.write(file2.read());
+        try (FileOutputStream fileOutputStream = new FileOutputStream(fileName1);
+             FileInputStream fileInputStream1 = new FileInputStream(fileName2);
+             FileInputStream fileInputStream2 = new FileInputStream(fileName3)) {
+            while (fileInputStream1.available() > 0) {
+                fileOutputStream.write(fileInputStream1.read());
             }
-
-            file1.write('\n');
-
-            while (file3.available() > 0) {
-                file1.write(file3.read());
+            while (fileInputStream2.available() > 0) {
+                fileOutputStream.write(fileInputStream2.read());
             }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

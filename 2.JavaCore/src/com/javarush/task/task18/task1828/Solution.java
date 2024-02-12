@@ -1,7 +1,10 @@
 package com.javarush.task.task18.task1828;
 
-import javax.imageio.IIOException;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,116 +13,91 @@ import java.util.List;
 */
 
 public class Solution {
-    public static void main(String[] args) {
+    public static class Product {
+        int id;
+        String name;
+        String price;
+        String quantity;
 
-        String path;
+        public Product(int id, String name, String price, String quantity) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
+        }
 
-        try (BufferedReader pathReader = new BufferedReader(new InputStreamReader(System.in));
-             FileReader fileReader = new FileReader(path = pathReader.readLine());
-             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-
-            int id = 0;
-            String line;
-
-            if ("-c".equals(args[0])) {
-
-                FileWriter fileWriter = new FileWriter(path, true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    int currentId = Integer.parseInt(line.substring(0, 8).trim());
-                    if (currentId >= id) {
-                        id = currentId;
-                    }
-                }
-
-                String strId = String.valueOf(id + 1);
-
-                StringBuilder stringBuilder = buildLine(strId, args[1], args[2], args[3]);
-
-                if (id != 1) {
-                    bufferedWriter.write("\n" + stringBuilder);
-                } else {
-                    bufferedWriter.write(stringBuilder.toString());
-                }
-
-                bufferedWriter.close();
-
-            } else if("-u".equals(args[0])){
-
-                ArrayList<String> arrayList = new ArrayList<>();
-                while((line = bufferedReader.readLine()) != null){
-                    if(!line.substring(0,8).trim().equals(args[1])){
-                        arrayList.add(line);
-                    } else {
-                        arrayList.add(buildLine(args[1],args[2],args[3],args[4]).toString());
-                    }
-                }
-
-                FileWriter fileWriter = new FileWriter(path);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-                for (String str : arrayList){
-                    bufferedWriter.write(str);
-                    bufferedWriter.newLine();
-                }
-
-                bufferedWriter.close();
-
-            }
-
-            else if ("-d".equals(args[0])){
-
-                ArrayList<String> arrayList = new ArrayList<>();
-                while((line = bufferedReader.readLine()) != null){
-                    if(!line.substring(0,8).trim().equals(args[1])){
-                        arrayList.add(line);
-                    }
-                }
-
-                FileWriter fileWriter = new FileWriter(path);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-                for (String str : arrayList){
-                    bufferedWriter.write(str);
-                    bufferedWriter.newLine();
-                }
-
-                bufferedWriter.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        @Override
+        public String toString() {
+            return String.format("%-8d%-30s%-8s%-4s", id, name, price, quantity);
         }
     }
 
-    private static StringBuilder buildLine(String strId, String productName, String price, String quantity) {
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = reader.readLine();
 
-        StringBuilder stringBuilder = new StringBuilder(50);
+        List<Product> products = new ArrayList<>();
 
-        for (int i = 0; i < 50; i++) {
-            stringBuilder.append(" ");
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(fileName))) {
+            while (fileReader.ready()) {
+                Product product = getProduct(fileReader.readLine());
+                products.add(product);
+            }
         }
 
-        stringBuilder.replace(0, strId.length(), strId);
-
-        if (productName.length() > 30) {
-            stringBuilder.replace(8, 38, productName.substring(0, 30));
-        } else {
-            stringBuilder.replace(8, 8 + productName.length(), productName);
+        switch (args[0]) {
+            case "-u": {
+                int id = Integer.parseInt(args[1]);
+                String name = "";
+                for (int i = 2; i < args.length - 2; i++) {
+                    name += args[i] + " ";
+                }
+                if (name.length() > 30) {
+                    name = name.substring(0, 30);
+                }
+                String price = args[args.length - 2];
+                if (price.length() > 8) {
+                    price = price.substring(0, 8);
+                }
+                String quantity = args[args.length - 1];
+                if (quantity.length() > 4) {
+                    quantity = quantity.substring(0, 4);
+                }
+                Product productToUpdate = null;
+                for (Product product : products) {
+                    if (product.id == id) productToUpdate = product;
+                }
+                if (productToUpdate != null) {
+                    productToUpdate.name = name;
+                    productToUpdate.price = price;
+                    productToUpdate.quantity = quantity;
+                }
+                break;
+            }
+            case "-d": {
+                int id = Integer.parseInt(args[1]);
+                Product productToDelete = null;
+                for (Product product : products) {
+                    if (product.id == id) productToDelete = product;
+                }
+                if (productToDelete != null) products.remove(productToDelete);
+                break;
+            }
         }
 
-        if (price.length() > 8) {
-            stringBuilder.replace(38, 46, price.substring(0, 8));
-        } else {
-            stringBuilder.replace(38, 38 + price.length(), price);
+        try (FileWriter fileWriter = new FileWriter(fileName)) {
+            for (Product product : products) {
+                fileWriter.write(product.toString());
+                fileWriter.write("\n");
+            }
         }
+    }
 
-        if (quantity.length() > 4) {
-            stringBuilder.replace(46, 50, quantity.substring(0, 4));
-        } else {
-            stringBuilder.replace(46, 46 + quantity.length(), quantity);
-        }
-
-        return stringBuilder;
+    public static Product getProduct(String string) {
+        String id = string.substring(0, 8).trim();
+        String name = string.substring(8, 38).trim();
+        String price = string.substring(38, 46).trim();
+        String quantity = string.substring(46, 50).trim();
+        return new Product(Integer.parseInt(id), name, price, quantity);
     }
 }

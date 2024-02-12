@@ -7,23 +7,24 @@ import java.io.*;
 */
 
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String inputFile = reader.readLine();
+        String outputFile1 = reader.readLine();
+        String outputFile2 = reader.readLine();
 
-        try (BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-             FileInputStream fileInputStream = new FileInputStream(consoleReader.readLine());
-             FileOutputStream fileOutputStream1 = new FileOutputStream(consoleReader.readLine());
-             FileOutputStream fileOutputStream2 = new FileOutputStream(consoleReader.readLine())) {
-            int size = fileInputStream.available() / 2;
+        try (FileInputStream fileInputStream = new FileInputStream(inputFile);
+             FileOutputStream fileOutputStream1 = new FileOutputStream(outputFile1);
+             FileOutputStream fileOutputStream2 = new FileOutputStream(outputFile2)) {
 
-            while (size != 0) {
-                fileOutputStream1.write(fileInputStream.read());
-                size--;
-            }
+            int halfOfFile = (fileInputStream.available() + 1) / 2;
+            int numberOfByte = 0;
             while (fileInputStream.available() > 0) {
-                fileOutputStream2.write(fileInputStream.read());
+                if (numberOfByte < halfOfFile) {
+                    fileOutputStream1.write(fileInputStream.read());
+                    numberOfByte++;
+                } else fileOutputStream2.write(fileInputStream.read());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

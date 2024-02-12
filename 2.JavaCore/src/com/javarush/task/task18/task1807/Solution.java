@@ -7,18 +7,16 @@ import java.io.*;
 */
 
 public class Solution {
-    public static void main(String[] args) {
-        try (BufferedReader filePath = new BufferedReader(new InputStreamReader(System.in));
-             FileInputStream fileInputStream = new FileInputStream(filePath.readLine())) {
-            int count = 0;
-            while (fileInputStream.available()>0) {
-                if (((char) fileInputStream.read()) == ',') {
-                    count++;
-                }
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = reader.readLine();
+
+        int commaCount = 0;
+        try (FileInputStream fileInputStream = new FileInputStream(fileName)) {
+            while (fileInputStream.available() > 0) {
+                if (fileInputStream.read() == 44) commaCount++;
             }
-            System.out.println(count);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        System.out.println(commaCount);
     }
 }

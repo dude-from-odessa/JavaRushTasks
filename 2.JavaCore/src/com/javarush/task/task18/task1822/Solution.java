@@ -1,5 +1,6 @@
 package com.javarush.task.task18.task1822;
 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,18 +11,17 @@ import java.io.InputStreamReader;
 */
 
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(new BufferedReader(new InputStreamReader(System.in)).readLine()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.substring(0, line.indexOf(' ')).equals(args[0])) {
-                    System.out.println(line);
+        String str;
+        try (BufferedReader bufferedFileReader = new BufferedReader(new FileReader(reader.readLine()))) {
+            while ((str = bufferedFileReader.readLine()) != null) {
+                if (str.startsWith(args[0] + " ")) {
+                    System.out.println(str);
                     break;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

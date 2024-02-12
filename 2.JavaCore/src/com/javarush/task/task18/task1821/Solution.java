@@ -1,6 +1,6 @@
 package com.javarush.task.task18.task1821;
 
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 /* 
@@ -8,25 +8,17 @@ import java.io.IOException;
 */
 
 public class Solution {
-    public static void main(String[] args) {
-
-        int[] table = new int[127];
-        int character;
-        try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
-            while ((character = fileInputStream.read()) > -1) {
-                if(character <= 127) {
-                    table[character] += 1;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for (int i = 0; i < table.length; i++) {
-            if (table[i] != 0) {
-                System.out.printf("%c %d%n", (char) i, table[i]);
+    public static void main(String[] args) throws IOException {
+        int[] aSCII = new int[128];
+        try (FileReader reader = new FileReader(args[0])) {
+            while (reader.ready()) {
+                aSCII[reader.read()]++;
             }
         }
-
+        for (int i = 0; i < aSCII.length; i++) {
+            if (aSCII[i] != 0) {
+                System.out.println((char) i + " " + aSCII[i]);
+            }
+        }
     }
 }

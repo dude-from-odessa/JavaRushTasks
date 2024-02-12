@@ -8,27 +8,21 @@ import java.io.*;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName1 = reader.readLine();
+        String fileName2 = reader.readLine();
 
-        try (BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
-             FileInputStream fileInputStream = new FileInputStream(console.readLine());
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(console.readLine(), true))) {
+        try (BufferedReader bufferedFileReader = new BufferedReader(new FileReader(fileName1));
+             PrintWriter printWriter = new PrintWriter(new FileWriter(fileName2))) {
 
-            StringBuilder stringBuilder = new StringBuilder();
-
-            int byteData;
-            while ((byteData = fileInputStream.read()) != -1) {
-                stringBuilder.append((char) byteData);
+            while (bufferedFileReader.ready()) {
+                String[] splittedLine = bufferedFileReader.readLine().split(" ");
+                for (String numberInString : splittedLine) {
+                    double number = Double.parseDouble(numberInString);
+                    long roundedNumber = Math.round(number);
+                    printWriter.print(roundedNumber + " ");
+                }
             }
-
-            String[] numbers = stringBuilder.toString().split(" ");
-
-            for (String numStr : numbers) {
-                double number = Double.parseDouble(numStr);
-                bufferedWriter.write(Math.round(number) + " ");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

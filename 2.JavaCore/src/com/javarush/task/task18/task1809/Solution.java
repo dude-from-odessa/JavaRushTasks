@@ -4,27 +4,28 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 /* 
 Реверс файла
 */
 
 public class Solution {
-    public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in);
-             FileInputStream fileInputStream = new FileInputStream(scanner.nextLine());
-             FileOutputStream fileOutputStream = new FileOutputStream(scanner.nextLine())) {
-            byte[] buffer = new byte[fileInputStream.available()];
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String inputFile = reader.readLine();
+        String outputFile = reader.readLine();
 
-            fileInputStream.read(buffer);
+        try (FileInputStream fileInputStream = new FileInputStream(inputFile);
+             FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
 
-            for (int i = buffer.length - 1; i >= 0; i--) {
-                fileOutputStream.write(buffer[i]);
+            List<Integer> inputBytes = new ArrayList<>();
+            while (fileInputStream.available() > 0) {
+                inputBytes.add(fileInputStream.read());
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            Collections.reverse(inputBytes);
+            for (Integer aByte : inputBytes) {
+                fileOutputStream.write(aByte);
+            }
         }
     }
 }
