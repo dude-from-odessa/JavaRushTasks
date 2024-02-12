@@ -12505,3 +12505,18 @@ java.lang.StringIndexOutOfBoundsException: String index out of range: -1
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:113)
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:105)
 	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:92)
+2024-02-12 02:14:24 INFO  ApacheHttpClient.getWebResourceAsStream(502) - responseCode = 200
+2024-02-12 02:14:26 INFO  ApacheHttpClient.getFilteredTasks(336) - responseCode = 200
+2024-02-12 02:15:17 INFO  ApacheHttpClient.getWebResourceAsStream(502) - responseCode = 200
+2024-02-12 02:15:19 INFO  ApacheHttpClient.getFilteredTasks(336) - responseCode = 200
+2024-02-12 02:15:51 INFO  ApacheHttpClient.getWebResourceAsStream(502) - responseCode = 200
+2024-02-12 02:15:55 INFO  ApacheHttpClient.getFilteredTasks(336) - responseCode = 200
+2024-02-12 02:15:58 INFO  ApacheHttpClient.getTaskTemplateInfo(353) - responseCode = 200
+2024-02-12 02:15:58 INFO  TaskInfoSelectorMouseListener.createDirectoryRecursive(78) - File created :C:/Users/MSI/IdeaProjects/JavaRushTasks/2.JavaCore/src/com/javarush/task/task18/task1819
+2024-02-12 02:29:03 INFO  ApacheHttpClient.getWebResourceAsStream(502) - responseCode = 200
+2024-02-12 02:29:05 INFO  ApacheHttpClient.getTask(488) - responseCode = 200
+2024-02-12 02:29:55 INFO  ApacheHttpClient.getWebResourceAsStream(502) - responseCode = 200
+2024-02-12 02:30:00 INFO  ApacheHttpClient.getTask(488) - responseCode = 200
+2024-02-12 02:30:05 INFO  ApacheHttpClient.completed(32) - responseCode = 200
+2024-02-12 02:30:06 INFO  ApacheHttpClient.getTask(488) - responseCode = 200
+2024-02-12 02:32:23 INFO  ApacheHttpClient.getWebResourceAsStream(502) - responseCode = 200
