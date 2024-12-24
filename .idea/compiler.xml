@@ -2,6 +2,7 @@
 <project version="4">
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="1.JavaSyntax" options="--add-modules java.base" />
       <module name="2.JavaCore" options="--add-modules java.base,java.logging" />
       <module name="4.JavaCollections" options="--add-modules java.base" />
       <module name="8.Games" options="--add-modules java.base" />
